@@ -18,13 +18,13 @@ int main(void)
   lcd_off();
   lcd_clear();
   // Entry Mode Set:
-  // incrementa endereço, sem shift
+  // increments address, without shift
   lcd_send_byte(0b0110, RS_INSTRUCTION_MODE);
 
   // Display ON
-  // display ligado, cursor e blink ligados
+  // display on, cursor and blink on
   lcd_send_byte(0b00001111, RS_INSTRUCTION_MODE);
-  //Set DDRAM Adress (line 2)
+  //Set DDRAM address (line 2)
   lcd_send_byte(0xC0, RS_INSTRUCTION_MODE);
 
 
