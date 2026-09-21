@@ -1,8 +1,10 @@
+/*This is a trivial code sample describing how to utilize the lcd_hd44780 driver functions */
 #include <lcd_hd44780.h>
 #include "stm32f4xx_hal.h"
 
 void SystemClock_Config(void);
 void RCC_SET(GPIO_TypeDef *port);
+
 
 int main(void)
 {
@@ -17,23 +19,14 @@ int main(void)
   lcd_init();
   lcd_off();
   lcd_clear();
-  // Entry Mode Set:
-  // increments address, without shift
-  lcd_send_byte(0b0110, RS_INSTRUCTION_MODE);
-
-  // Display ON
-  // display on, cursor and blink on
-  lcd_send_byte(0b00001111, RS_INSTRUCTION_MODE);
-  //Set DDRAM address (line 2)
-  lcd_send_byte(0xC0, RS_INSTRUCTION_MODE);
+  lcd_entry_increment();
+  lcd_on();
 
 
+  lcd_set_cursor(5, 1);
+  lcd_write_str("HELLO!");
 
-  lcd_write_str("Samuel");
-  lcd_write_str(" Werlang");
 }
-
-
 
 
 

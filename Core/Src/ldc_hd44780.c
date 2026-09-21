@@ -11,7 +11,7 @@ void lcd_setup(GPIO_TypeDef *port, uint8_t pnum) {
 	port->MODER |= (1U << (pnum*2));
 	port->OTYPER &= ~(1U << pnum);
 	port->OSPEEDR |=(1U << (pnum*2 + 1)) | (1U << (pnum*2));
-	port->PUPDR &= ~(1U << pnum);
+	port->PUPDR &= ~(3U << (pnum * 2));
 }
 
 void lcd_set_ports(void) {
@@ -100,10 +100,17 @@ void lcd_init() {
 	  HAL_Delay(1);
 	  lcd_send_byte(0x30, RS_INSTRUCTION_MODE);
 	  lcd_send_byte(0x38, RS_INSTRUCTION_MODE); /* 8 bits, 2 lines, 5x8 font */
+
+
+
 }
 
-void lcd_on() {
-	lcd_send_byte(0xC, RS_INSTRUCTION_MODE);
+void lcd_entry_increment(void) {
+	lcd_send_byte(0x06, RS_INSTRUCTION_MODE); /* increments address, without shift */
+}
+
+void lcd_on(void) {
+	lcd_send_byte(0x0C, RS_INSTRUCTION_MODE); /* display on, cursor and blink off */
 }
 
 void lcd_off() {
@@ -124,4 +131,11 @@ void lcd_write_str(const char *str) {
 		lcd_send_byte(*str, RS_CHAR_MODE);
 		str++;
 	}
+}
+
+int lcd_set_cursor(uint8_t x, uint8_t y) {
+    if (x >= 16 || y >= 2)
+        return 1;
+    lcd_send_byte(0x80 + x + (y * 0x40), RS_INSTRUCTION_MODE);
+    return 0;
 }

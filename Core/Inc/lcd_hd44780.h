@@ -18,10 +18,11 @@ void RCC_SET(GPIO_TypeDef *port);
 
 //LCD main Functions
 void lcd_init(void);
-void lcd_on();
+void lcd_entry_increment(void);
+void lcd_on(void);
 void lcd_off();
 void lcd_clear(void);
 void lcd_home(void);
-int lcd_set_cursor(uint8_t row, uint8_t col, uint8_t blink);
+int lcd_set_cursor(uint8_t x, uint8_t y);
 void lcd_write_char(char c);
 void lcd_write_str(const char *str);
