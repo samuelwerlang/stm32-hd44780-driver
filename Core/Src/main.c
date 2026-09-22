@@ -23,9 +23,8 @@ int main(void)
   lcd_on();
 
 
-  lcd_set_cursor(5, 1);
-  lcd_write_str("HELLO!");
-
+  lcd_set_cursor(2, 1);
+  lcd_write_str("Hello World");
 }
 
 
